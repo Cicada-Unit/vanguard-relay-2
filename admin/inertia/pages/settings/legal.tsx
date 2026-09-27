@@ -7,7 +7,7 @@ export default function LegalPage() {
       <Head title="Legal Notices | Project NOMAD" />
       <div className="xl:pl-72 w-full">
         <main className="px-12 py-6 max-w-4xl">
-          <h1 className="text-4xl font-semibold mb-8">Legal Notices</h1>
+          <h1 className="text-4xl font-semibold mb-8">Legal Notices</h1><p className="text-text-primary mb-6">Vanguard Relay is an independent derivative project based on Project NOMAD. Vanguard Relay is not affiliated with or endorsed by Crosstalk Solutions.</p>
 
           {/* License Agreement */}
           <section className="mb-10">
