@@ -4,7 +4,7 @@ import {
   IconHelp,
   IconMapRoute,
   IconPill,
-  IconSettings,
+  IconSystem Configuration,
   IconWifiOff,
 } from '@tabler/icons-react'
 import { Head, Link, router, usePage } from '@inertiajs/react'
@@ -29,7 +29,7 @@ const MAPS_ITEM = {
   label: 'Maps',
   to: '/maps',
   target: '',
-  description: 'View offline maps',
+  description: 'View offline navigation',
   icon: <IconMapRoute size={48} />,
   installed: true,
   displayOrder: 4,
@@ -53,7 +53,7 @@ const DRUG_REFERENCE_ITEM = {
 // System items shown after all apps
 const SYSTEM_ITEMS = [
   {
-    label: 'Easy Setup',
+    label: 'Deployment Protocol',
     to: '/easy-setup',
     target: '',
     description:
@@ -64,7 +64,7 @@ const SYSTEM_ITEMS = [
     poweredBy: null,
   },
   {
-    label: 'Supply Depot',
+    label: 'Field Depot',
     to: '/supply-depot',
     target: '',
     description: 'Browse and install curated apps, or add your own Docker container',
@@ -74,21 +74,21 @@ const SYSTEM_ITEMS = [
     poweredBy: null,
   },
   {
-    label: 'Docs',
+    label: 'Documentation',
     to: '/docs/home',
     target: '',
-    description: 'Read Project NOMAD manuals and guides',
+    description: 'Read Vanguard Relay manuals and guides',
     icon: <IconHelp size={48} />,
     installed: true,
     displayOrder: 52,
     poweredBy: null,
   },
   {
-    label: 'Settings',
+    label: 'System Configuration',
     to: '/settings/system',
     target: '',
     description: 'Configure your NOMAD settings',
-    icon: <IconSettings size={48} />,
+    icon: <IconSystem Configuration size={48} />,
     installed: true,
     displayOrder: 53,
     poweredBy: null,
@@ -126,7 +126,7 @@ export default function Home(props: {
     queryClient.invalidateQueries({ queryKey: BENCHMARK_RERUN_BANNER_QUERY_KEY })
   }
 
-  // Check if user has visited Easy Setup
+  // Check if user has visited Deployment Protocol
   const { data: easySetupVisited } = useSystemSetting({
     key: 'ui.hasVisitedEasySetup'
   })
@@ -176,19 +176,19 @@ export default function Home(props: {
 
   return (
     <AppLayout>
-      <Head title="Command Center" />
+      <Head title="Relay Control" />
       {
         updateInfo?.updateAvailable && (
           <div className='flex justify-center items-center p-4 w-full'>
             <Alert
-              title="An update is available for Project NOMAD!"
+              title="An update is available for Vanguard Relay!"
               type="info-inverted"
               variant="solid"
               className="w-full"
               buttonProps={{
                 variant: 'primary',
-                children: 'Go to Settings',
-                icon: 'IconSettings',
+                children: 'Go to System Configuration',
+                icon: 'IconSystem Configuration',
                 onClick: () => router.visit('/settings/update'),
               }}
             />
@@ -219,7 +219,7 @@ export default function Home(props: {
       }
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
         {items.map((item) => {
-          const isEasySetup = item.label === 'Easy Setup'
+          const isEasySetup = item.label === 'Deployment Protocol'
           const shouldHighlight = isEasySetup && shouldHighlightEasySetup
 
           const tileContent = (
