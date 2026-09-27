@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Project NOMAD Uninstall Script
+# Vanguard Relay Uninstall Script
 
 ###################################################################################################################################################################################################
 
-# Script                | Project NOMAD Uninstall Script
+# Script                | Vanguard Relay Uninstall Script
 # Version               | 1.0.0
 # Author                | Crosstalk Solutions, LLC
 # Website               | https://crosstalksolutions.com
@@ -28,7 +28,7 @@ GREEN='\033[1;32m' # Light Green.
 #                                                                                                                                                                                                 #
 ###################################################################################################################################################################################################
 
-NOMAD_DIR="/opt/project-nomad"
+NOMAD_DIR="/opt/vanguard-relay"
 MANAGEMENT_COMPOSE_FILE="${NOMAD_DIR}/compose.yml"
 
 ###################################################################################################################################################################################################
@@ -63,13 +63,13 @@ check_current_directory(){
 
 ensure_management_compose_file_exists(){
   if [ ! -f "${MANAGEMENT_COMPOSE_FILE}" ]; then
-    echo "Unable to find the management Docker Compose file at ${MANAGEMENT_COMPOSE_FILE}. There may be a problem with your Project NOMAD installation."
+    echo "Unable to find the management Docker Compose file at ${MANAGEMENT_COMPOSE_FILE}. There may be a problem with your Vanguard Relay installation."
     exit 1
   fi
 }
 
 get_uninstall_confirmation(){
-  read -p "This script will remove ALL Project NOMAD files and containers. THIS CANNOT BE UNDONE. Are you sure you want to continue? (y/n): " choice
+  read -p "This script will remove ALL Vanguard Relay files and containers. THIS CANNOT BE UNDONE. Are you sure you want to continue? (y/n): " choice
   case "$choice" in
     y|Y )
       echo -e "User chose to continue with the uninstallation."
@@ -104,12 +104,12 @@ check_docker_compose() {
 }
 
 storage_cleanup() {
-  read -p "Do you want to delete the Project NOMAD storage directory (${NOMAD_DIR})? This is best if you want to start a completely fresh install. This will PERMANENTLY DELETE all stored NOMAD data and can't be undone! (y/N): " delete_dir_choice
+  read -p "Do you want to delete the Vanguard Relay storage directory (${NOMAD_DIR})? This is best if you want to start a completely fresh install. This will PERMANENTLY DELETE all stored NOMAD data and can't be undone! (y/N): " delete_dir_choice
   case "$delete_dir_choice" in
       y|Y )
-          echo "Removing Project NOMAD files..."
+          echo "Removing Vanguard Relay files..."
           if rm -rf "${NOMAD_DIR}"; then
-              echo "Project NOMAD files removed."
+              echo "Vanguard Relay files removed."
           else
               echo "Warning: Failed to fully remove ${NOMAD_DIR}. You may need to remove it manually."
           fi
@@ -120,33 +120,33 @@ storage_cleanup() {
   esac
 }
 
-uninstall_nomad() {
-    echo "Stopping and removing Project NOMAD management containers..."
-    docker compose -p project-nomad -f "${MANAGEMENT_COMPOSE_FILE}" down
+uninstall_vanguard_relay() {
+    echo "Stopping and removing Vanguard Relay management containers..."
+    docker compose -p vanguard-relay -f "${MANAGEMENT_COMPOSE_FILE}" down
     echo "Allowing some time for management containers to stop..."
     sleep 5
 
 
-    # Stop and remove all containers where name starts with "nomad_"
-    echo "Stopping and removing all Project NOMAD app containers..."
-    docker ps -a --filter "name=^nomad_" --format "{{.Names}}" | xargs -r docker rm -f
+    # Stop and remove all containers where name starts with "vanguard_relay_"
+    echo "Stopping and removing all Vanguard Relay app containers..."
+    docker ps -a --filter "name=^vanguard_relay_" --format "{{.Names}}" | xargs -r docker rm -f
     echo "Allowing some time for app containers to stop..."
     sleep 5
 
     echo "Containers should be stopped now."
 
     # Remove the shared Docker network (may still exist if app containers were using it during compose down)
-    echo "Removing project-nomad_default network if it exists..."
-    docker network rm project-nomad_default 2>/dev/null && echo "Network removed." || echo "Network already removed or not found."
+    echo "Removing vanguard-relay_default network if it exists..."
+    docker network rm vanguard-relay_default 2>/dev/null && echo "Network removed." || echo "Network already removed or not found."
 
     # Remove the shared update volume
-    echo "Removing project-nomad_nomad-update-shared volume if it exists..."
-    docker volume rm project-nomad_nomad-update-shared 2>/dev/null && echo "Volume removed." || echo "Volume already removed or not found."
+    echo "Removing vanguard-relay_nomad-update-shared volume if it exists..."
+    docker volume rm vanguard-relay_nomad-update-shared 2>/dev/null && echo "Volume removed." || echo "Volume already removed or not found."
 
     # Prompt user for storage cleanup and handle it if so
     storage_cleanup
 
-    echo "Project NOMAD has been uninstalled. We hope to see you again soon!"
+    echo "Vanguard Relay has been uninstalled. We hope to see you again soon!"
 }
 
 ###################################################################################################################################################################################################
@@ -160,4 +160,4 @@ ensure_management_compose_file_exists
 ensure_docker_installed
 check_docker_compose
 get_uninstall_confirmation
-uninstall_nomad
+uninstall_vanguard_relay
