@@ -1,5 +1,5 @@
 <div align="center">
-<img src="admin/public/project_nomad_logo.webp" width="220" height="220" alt="Vanguard Relay"/>
+<img src="admin/public/vanguard_relay_logo.webp" width="220" height="220" alt="Vanguard Relay"/>
 
 # VANGUARD RELAY
 ### Node for Offline Media, Archives, and Data
