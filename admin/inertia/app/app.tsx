@@ -14,7 +14,7 @@ import NotificationsProvider from '~/providers/NotificationProvider'
 import { ThemeProvider } from '~/providers/ThemeProvider'
 import { UsePageProps } from '../../types/system'
 
-const appName = import.meta.env.VITE_APP_NAME || 'Project NOMAD'
+const appName = import.meta.env.VITE_APP_NAME || 'Vanguard Relay'
 const queryClient = new QueryClient()
 
 // Patch the global crypto object for non-HTTPS/localhost contexts
@@ -26,7 +26,7 @@ if (!window.crypto?.randomUUID) {
 }
 
 createInertiaApp({
-  progress: { color: '#424420' },
+  progress: { color: '#30351D' },
 
   title: (title) => `${title} - ${appName}`,
 
