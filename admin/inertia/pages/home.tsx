@@ -4,7 +4,7 @@ import {
   IconHelp,
   IconMapRoute,
   IconPill,
-  IconSystem Configuration,
+  IconSettings,
   IconWifiOff,
 } from '@tabler/icons-react'
 import { Head, Link, router, usePage } from '@inertiajs/react'
@@ -88,7 +88,7 @@ const SYSTEM_ITEMS = [
     to: '/settings/system',
     target: '',
     description: 'Configure your NOMAD settings',
-    icon: <IconSystem Configuration size={48} />,
+    icon: <IconSettings size={48} />,
     installed: true,
     displayOrder: 53,
     poweredBy: null,
@@ -188,7 +188,7 @@ export default function Home(props: {
               buttonProps={{
                 variant: 'primary',
                 children: 'Go to System Configuration',
-                icon: 'IconSystem Configuration',
+                icon: 'IconSettings',
                 onClick: () => router.visit('/settings/update'),
               }}
             />
