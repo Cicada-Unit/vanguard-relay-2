@@ -26,7 +26,7 @@ export default class ServiceSeeder extends BaseSeeder {
   // Use environment variable with fallback to production default
   private static NOMAD_STORAGE_ABS_PATH = env.get(
     'NOMAD_STORAGE_PATH',
-    '/opt/project-nomad/storage'
+    '/opt/vanguard-relay/storage'
   )
   private static DEFAULT_SERVICES: ServiceSeedRecord[] = [
     // ── Core / original services ──────────────────────────────────────────────
