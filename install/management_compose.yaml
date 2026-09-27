@@ -9,7 +9,7 @@
 name: vanguard-relay
 services:
   admin:
-    image: ghcr.io/crosstalk-solutions/vanguard-relay:latest
+    image: ghcr.io/cicada-unit/vanguard-relay:latest
     pull_policy: always
     container_name: vanguard_relay_admin
     restart: unless-stopped
@@ -19,14 +19,14 @@ services:
       - "8080:8080"
     volumes:
       # RELOCATING STORAGE: the host path on the LEFT of the colon below is the single source of
-      # truth for where all NOMAD data lives (ZIMs, AI models, notes, etc.). At runtime the admin
+      # truth for where all Vanguard Relay data lives (ZIMs, AI models, notes, etc.). At runtime the admin
       # inspects this mount and points every child app (Kiwix, Ollama, etc.) at the same host
       # location automatically, so you do NOT edit each service. To move storage:
-      #   1. Stop NOMAD (`docker compose down`) and MOVE the existing data to the new location,
+      #   1. Stop Vanguard Relay (`docker compose down`) and MOVE the existing data to the new location,
       #      keeping the subfolders intact (e.g. <new-path>/zim, <new-path>/models). Pointing at an
       #      empty folder gives an empty Information Library, not your existing content.
       #   2. Change the host path on the left of the colon below to the new location.
-      #   3. Set it EXACTLY the same in NOMAD_STORAGE_PATH and the disk-collector volume (both below).
+      #   3. Set it EXACTLY the same in VANGUARD_RELAY_STORAGE_PATH and the disk-collector volume (both below).
       #      Paths are case-sensitive (/mnt/Data != /mnt/data); a mismatch makes Docker create a new
       #      empty folder, which is the usual cause of "my content disappeared after moving it".
       - /opt/vanguard-relay/storage:/app/storage
@@ -34,10 +34,10 @@ services:
       - vanguard-relay-update-shared:/app/update-shared # Shared volume for update communication
     environment:
       - NODE_ENV=production
-      # NOMAD_STORAGE_PATH should equal the host path of the /app/storage volume above. The admin
+      # VANGUARD_RELAY_STORAGE_PATH should equal the host path of the /app/storage volume above. The admin
       # normally auto-detects that mount, so this is a fallback used only if the container can't be
       # inspected. Keep it in sync anyway so the fallback never sends child apps to the wrong place.
-      - NOMAD_STORAGE_PATH=/opt/vanguard-relay/storage
+      - VANGUARD_RELAY_STORAGE_PATH=/opt/vanguard-relay/storage
       # PORT is the port the admin server listens on *inside* the container and should not be changed. If you want to change which port the admin interface is accessible from on the host, you can change the port mapping in the "ports" section (e.g. "9090:8080" to access it on port 9090 from the host)
       - PORT=8080
       - LOG_LEVEL=info
@@ -50,11 +50,11 @@ services:
       - DB_HOST=mysql
       # If you change the MySQL port, make sure to update this accordingly
       - DB_PORT=3306
-      - DB_DATABASE=nomad
+      - DB_DATABASE=vanguard_relay
       - DB_USER=vanguard_relay_user
       # Needs to match the MYSQL_PASSWORD in the mysql service!
       - DB_PASSWORD=replaceme
-      - DB_NAME=nomad
+      - DB_NAME=vanguard_relay
       - DB_SSL=false
       - REDIS_HOST=redis
       # If you change the Redis port, make sure to update this accordingly
