@@ -46,8 +46,8 @@ export default function AppLayout({
         onClick={() => router.visit('/home')}
       >
         <img
-          src="/project_nomad_logo.webp"
-          alt="Project NOMAD Logo"
+          src="/vanguard_relay_logo.webp"
+          alt="Vanguard Relay Logo"
           className={compact ? 'h-12 w-12' : 'h-40 w-40'}
         />
         <h1
@@ -56,7 +56,7 @@ export default function AppLayout({
             compact ? 'text-2xl' : 'text-5xl'
           )}
         >
-          Command Center
+          Relay Control
         </h1>
       </div>
       <hr className={
