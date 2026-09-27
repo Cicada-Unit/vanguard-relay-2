@@ -1,10 +1,10 @@
 {
-  "name": "project-nomad-admin",
+  "name": "vanguard-relay-admin",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "license": "Apache-2.0",
-  "author": "Crosstalk Solutions, LLC",
+  "author": "Cicada Unit",
   "scripts": {
     "start": "node bin/server.js",
     "build": "node ace build",
