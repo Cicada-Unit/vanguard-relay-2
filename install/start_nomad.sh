@@ -1,12 +1,12 @@
 #!/bin/bash
 
-echo "Finding Project NOMAD containers..."
+echo "Finding Vanguard Relay containers..."
 
 # -a to include all containers (running and stopped)
-containers=$(docker ps -a --filter "name=^nomad_" --format "{{.Names}}")
+containers=$(docker ps -a --filter "name=^vanguard_relay_" --format "{{.Names}}")
 
 if [ -z "$containers" ]; then
-    echo "No containers found for Project NOMAD Is it installed?"
+    echo "No containers found for Vanguard Relay Is it installed?"
     exit 0
 fi
 
@@ -24,4 +24,4 @@ for container in $containers; do
     echo ""
 done
 
-echo "Finished initiating start of all Project NOMAD containers."
+echo "Finished initiating start of all Vanguard Relay containers."
