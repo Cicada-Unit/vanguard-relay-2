@@ -42,7 +42,7 @@ export default function SupportPage() {
               className="block mb-4 rounded-lg overflow-hidden hover:opacity-90 transition-opacity"
             >
               <img
-                src="/rogue-support-banner.webp"
+                src="/vanguard-relay-banner.webp"
                 alt="Vanguard Relay — Conquer Your Home Network"
                 className="w-full"
               />
