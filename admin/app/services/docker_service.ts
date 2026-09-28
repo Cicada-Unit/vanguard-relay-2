@@ -165,7 +165,7 @@ export class DockerService {
   }
 
   /**
-   * Fetches the status of all Docker containers related to Nomad services. (those prefixed with 'nomad_')
+   * Fetches the status of all Docker containers related to Vanguard Relay services. (those prefixed with 'vanguard_relay_')
    * Results are cached for 5 seconds and concurrent callers share a single in-flight request,
    * preventing Docker socket congestion during rapid page navigation.
    */
@@ -893,8 +893,8 @@ export class DockerService {
         const ollamaService = new (await import('./ollama_service.js')).OllamaService()
         const ragService = new (await import('./rag_service.js')).RagService(this, ollamaService)
 
-        ragService.discoverNomadDocs().catch((error) => {
-          logger.error('[DockerService] Failed to discover Nomad docs:', error)
+        ragService.discoverVanguardRelayDocs().catch((error) => {
+          logger.error('[DockerService] Failed to discover Vanguard Relay docs:', error)
         })
       }
 
@@ -1097,7 +1097,7 @@ export class DockerService {
       `openssl req -x509 -newkey rsa:2048 -nodes ` +
         `-keyout "${keyPath}" -out "${certPath}" -days 3650 ` +
         `-subj "/CN=${commonName}" ` +
-        `-addext "subjectAltName=DNS:nomad,DNS:localhost"`
+        `-addext "subjectAltName=DNS:vanguard-relay,DNS:localhost"`
     )
 
     await chmod(keyPath, 0o600)
