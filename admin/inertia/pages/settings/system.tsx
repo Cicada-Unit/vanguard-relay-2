@@ -27,7 +27,7 @@ export default function SettingsPage(props: {
 
   const [gpuBannerDismissed, setGpuBannerDismissed] = useState(() => {
     try {
-      return localStorage.getItem('nomad:gpu-banner-dismissed') === 'true'
+      return localStorage.getItem('vanguard-relay:gpu-banner-dismissed') === 'true'
     } catch {
       return false
     }
@@ -37,27 +37,27 @@ export default function SettingsPage(props: {
   const handleDismissGpuBanner = () => {
     setGpuBannerDismissed(true)
     try {
-      localStorage.setItem('nomad:gpu-banner-dismissed', 'true')
+      localStorage.setItem('vanguard-relay:gpu-banner-dismissed', 'true')
     } catch {}
   }
 
   const handleForceReinstallOllama = () => {
     openModal(
       <StyledModal
-        title="Reinstall AI Assistant?"
+        title="Reinstall Relay Intelligence?"
         onConfirm={async () => {
           closeAllModals()
           setReinstalling(true)
           try {
-            const response = await api.forceReinstallService('nomad_ollama')
+            const response = await api.forceReinstallService('vanguard_relay_ollama')
             if (!response || !response.success) {
               throw new Error(response?.message || 'Force reinstall failed')
             }
             addNotification({
-              message: 'AI Assistant is being reinstalled with GPU support. This page will reload shortly.',
+              message: 'Relay Intelligence is being reinstalled with GPU support. This page will reload shortly.',
               type: 'success',
             })
-            try { localStorage.removeItem('nomad:gpu-banner-dismissed') } catch {}
+            try { localStorage.removeItem('vanguard-relay:gpu-banner-dismissed') } catch {}
             setTimeout(() => window.location.reload(), 5000)
           } catch (error) {
             addNotification({
@@ -73,7 +73,7 @@ export default function SettingsPage(props: {
         cancelText="Cancel"
       >
         <p className="text-text-primary">
-          This will recreate the AI Assistant container with GPU support enabled.
+          This will recreate the Relay Intelligence container with GPU support enabled.
           Your downloaded models will be preserved. The service will be briefly
           unavailable during reinstall.
         </p>
@@ -208,12 +208,12 @@ export default function SettingsPage(props: {
                   <Alert
                     type="warning"
                     variant="bordered"
-                    title="GPU Not Accessible to AI Assistant"
-                    message={`Your system has ${info?.gpuHealth?.gpuVendor === 'amd' ? 'an AMD' : 'an NVIDIA'} GPU, but the AI Assistant can't access it. AI is running on CPU only, which is significantly slower.`}
+                    title="GPU Not Accessible to Relay Intelligence"
+                    message={`Your system has ${info?.gpuHealth?.gpuVendor === 'amd' ? 'an AMD' : 'an NVIDIA'} GPU, but the Relay Intelligence can't access it. AI is running on CPU only, which is significantly slower.`}
                     dismissible={true}
                     onDismiss={handleDismissGpuBanner}
                     buttonProps={{
-                      children: 'Fix: Reinstall AI Assistant',
+                      children: 'Fix: Reinstall Relay Intelligence',
                       icon: 'IconRefresh',
                       variant: 'action',
                       size: 'sm',
