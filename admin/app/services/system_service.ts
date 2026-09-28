@@ -39,7 +39,7 @@ export class SystemService {
   async getInternetStatus(): Promise<boolean> {
     // Primary endpoint stays Cloudflare's privacy-respecting utility endpoint.
     // The fallbacks are hosts the application already contacts elsewhere
-    // (GitHub API for update checks, the Project NOMAD API for release-note
+    // (GitHub API for update checks, the Vanguard Relay release service for release-note
     // subscriptions), so no new third-party services are introduced. They exist
     // to avoid false "offline" reports on networks that block 1.1.1.1.
     const DEFAULT_TEST_URLS = [
@@ -512,7 +512,7 @@ export class SystemService {
 
           // AMD doesn't register a Docker runtime. Detection sources, in priority order:
           //   1. KV 'gpu.type' (set by DockerService._detectGPUType after first Ollama install)
-          //   2. Marker file at /app/storage/.vanguard-gpu-type (written by install_nomad.sh)
+          //   2. Marker file at /app/storage/.vanguard-gpu-type (written by install_vanguard_relay.sh)
           // The marker file matters because the System page should reflect AMD presence
           // even before AI Assistant has been installed for the first time.
           let savedGpuType: string | null | undefined = await KVStore.getValue('gpu.type') as string | undefined
@@ -719,34 +719,12 @@ export class SystemService {
     }
   }
 
-  async subscribeToReleaseNotes(email: string): Promise<{ success: boolean; message: string }> {
-    try {
-      const response = await axios.post(
-        'https://github.com/Cicada-Unit/vanguard-relay-2/api/v1/lists/release-notes/subscribe',
-        { email },
-        { timeout: 5000 }
-      )
-
-      if (response.status === 200) {
-        return {
-          success: true,
-          message: 'Successfully subscribed to release notes',
-        }
-      }
-
-      return {
-        success: false,
-        message: `Failed to subscribe: ${response.statusText}`,
-      }
-    } catch (error) {
-      logger.error('Error subscribing to release notes:', error)
-      return {
-        success: false,
-        message: `Failed to subscribe: ${error instanceof Error ? error.message : error}`,
-      }
+  async subscribeToReleaseNotes(_email: string): Promise<{ success: boolean; message: string }> {
+    return {
+      success: false,
+      message: 'Release-note subscriptions are not configured for this Vanguard Relay fork yet.',
     }
   }
-
   async getDebugInfo(): Promise<string> {
     const appVersion = SystemService.getAppVersion()
     const environment = process.env.NODE_ENV || 'unknown'
