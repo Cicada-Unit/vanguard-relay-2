@@ -57,7 +57,7 @@ const SYSTEM_ITEMS = [
     to: '/easy-setup',
     target: '',
     description:
-      'Not sure where to start? Use the setup wizard to quickly configure your NOMAD!',
+      'Not sure where to start? Use the setup wizard to quickly configure your Vanguard Relay!',
     icon: <IconBolt size={48} />,
     installed: true,
     displayOrder: 50,
@@ -87,7 +87,7 @@ const SYSTEM_ITEMS = [
     label: 'System Configuration',
     to: '/settings/system',
     target: '',
-    description: 'Configure your NOMAD settings',
+    description: 'Configure your Vanguard Relay settings',
     icon: <IconSettings size={48} />,
     installed: true,
     displayOrder: 53,
