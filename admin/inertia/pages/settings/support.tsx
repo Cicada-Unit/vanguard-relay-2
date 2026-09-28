@@ -27,14 +27,14 @@ export default function SupportPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#FF5E5B] hover:bg-[#e54e4b] text-white font-semibold rounded-lg transition-colors"
             >
-              Support on Ko-fi
+              Support the Project
               <IconExternalLink size={18} />
             </a>
           </section>
 
           {/* Vanguard Relay */}
           <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-3">Need Help With Your Home Network?</h2>
+            <h2 className="text-2xl font-semibold mb-3">Vanguard Relay</h2>
             <a
               href="https://github.com/Cicada-Unit/vanguard-relay-2"
               target="_blank"
@@ -48,7 +48,7 @@ export default function SupportPage() {
               />
             </a>
             <p className="text-text-muted mb-4">
-              Vanguard Relay is a networking consultation service for home users.
+              Vanguard Relay is an open-source offline computing platform.
               Think of it as Uber for computer networking — expert help when you need it.
             </p>
             <a
@@ -57,7 +57,7 @@ export default function SupportPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-blue-600 hover:underline font-medium"
             >
-              Visit Rogue.Support
+              Visit Vanguard Relay on GitHub
               <IconExternalLink size={16} />
             </a>
           </section>
