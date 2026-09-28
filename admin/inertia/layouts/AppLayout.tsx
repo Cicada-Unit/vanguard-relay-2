@@ -50,14 +50,24 @@ export default function AppLayout({
           alt="Vanguard Relay Logo"
           className={compact ? 'h-12 w-12' : 'h-40 w-40'}
         />
-        <h1
-          className={classNames(
-            'font-bold text-desert-green',
-            compact ? 'text-2xl' : 'text-5xl'
+        <div className={classNames('flex flex-col items-center', compact ? '' : 'gap-1')}>
+          <h1
+            className={classNames(
+              'font-bold text-desert-green tracking-wide',
+              compact ? 'text-2xl' : 'text-5xl'
+            )}
+          >
+            Vanguard Relay
+          </h1>
+          {!compact && (
+            <p className="text-sm md:text-base font-semibold tracking-[0.18em] uppercase text-text-secondary">
+              Node for Offline Media, Archives, and Data
+            </p>
           )}
-        >
-          Relay Control
-        </h1>
+          <p className={classNames('font-bold text-desert-green', compact ? 'hidden' : 'text-lg')}>
+            Relay Control
+          </p>
+        </div>
       </div>
       <hr className={
         classNames(
