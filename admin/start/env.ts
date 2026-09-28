@@ -26,7 +26,7 @@ export default await Env.create(new URL('../', import.meta.url), {
   | Variables for configuring storage paths
   |----------------------------------------------------------
   */
-  NOMAD_STORAGE_PATH: Env.schema.string.optional(),
+  VANGUARD_RELAY_STORAGE_PATH: Env.schema.string.optional(),
 
   /*
   |----------------------------------------------------------
@@ -58,10 +58,10 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   /*
   |----------------------------------------------------------
-  | Variables for configuring Project Nomad's external API URL
+  | Variables for configuring Vanguard Relay's external API URL
   |----------------------------------------------------------
   */
-  NOMAD_API_URL: Env.schema.string.optional(),
+  VANGUARD_RELAY_API_URL: Env.schema.string.optional(),
 
   /*
   |----------------------------------------------------------
