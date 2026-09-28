@@ -28,8 +28,8 @@ GREEN='\033[1;32m' # Light Green.
 #                                                                                                                                                                                                 #
 ###################################################################################################################################################################################################
 
-NOMAD_DIR="/opt/vanguard-relay"
-MANAGEMENT_COMPOSE_FILE="${NOMAD_DIR}/compose.yml"
+Vanguard_DIR="/opt/vanguard-relay"
+MANAGEMENT_COMPOSE_FILE="${Vanguard_DIR}/compose.yml"
 
 ###################################################################################################################################################################################################
 #                                                                                                                                                                                                 #
@@ -55,8 +55,8 @@ check_has_sudo() {
 }
 
 check_current_directory(){
-  if [ "$(pwd)" == "${NOMAD_DIR}" ]; then
-    echo "Please run this script from a directory other than ${NOMAD_DIR}."
+  if [ "$(pwd)" == "${Vanguard_DIR}" ]; then
+    echo "Please run this script from a directory other than ${Vanguard_DIR}."
     exit 1
   fi
 }
@@ -104,18 +104,18 @@ check_docker_compose() {
 }
 
 storage_cleanup() {
-  read -p "Do you want to delete the Vanguard Relay storage directory (${NOMAD_DIR})? This is best if you want to start a completely fresh install. This will PERMANENTLY DELETE all stored NOMAD data and can't be undone! (y/N): " delete_dir_choice
+  read -p "Do you want to delete the Vanguard Relay storage directory (${Vanguard_DIR})? This is best if you want to start a completely fresh install. This will PERMANENTLY DELETE all stored Vanguard data and can't be undone! (y/N): " delete_dir_choice
   case "$delete_dir_choice" in
       y|Y )
           echo "Removing Vanguard Relay files..."
-          if rm -rf "${NOMAD_DIR}"; then
+          if rm -rf "${Vanguard_DIR}"; then
               echo "Vanguard Relay files removed."
           else
-              echo "Warning: Failed to fully remove ${NOMAD_DIR}. You may need to remove it manually."
+              echo "Warning: Failed to fully remove ${Vanguard_DIR}. You may need to remove it manually."
           fi
           ;;
       * )
-          echo "Skipping removal of ${NOMAD_DIR}."
+          echo "Skipping removal of ${Vanguard_DIR}."
           ;;
   esac
 }
@@ -140,8 +140,8 @@ uninstall_vanguard_relay() {
     docker network rm vanguard-relay_default 2>/dev/null && echo "Network removed." || echo "Network already removed or not found."
 
     # Remove the shared update volume
-    echo "Removing vanguard-relay_nomad-update-shared volume if it exists..."
-    docker volume rm vanguard-relay_nomad-update-shared 2>/dev/null && echo "Volume removed." || echo "Volume already removed or not found."
+    echo "Removing vanguard-relay-update-shared volume if it exists..."
+    docker volume rm vanguard-relay-update-shared 2>/dev/null && echo "Volume removed." || echo "Volume already removed or not found."
 
     # Prompt user for storage cleanup and handle it if so
     storage_cleanup
