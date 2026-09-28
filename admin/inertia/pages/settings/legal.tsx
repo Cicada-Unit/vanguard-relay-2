@@ -80,7 +80,7 @@ export default function LegalPage() {
             <ul className="list-disc list-inside space-y-2 text-text-primary">
               <li><strong>Zero Telemetry:</strong> Vanguard Relay does not collect, transmit, or store any usage data, analytics, or telemetry.</li>
               <li><strong>Local-First:</strong> All your data, downloaded content, AI conversations, and notes remain on your device.</li>
-              <li><strong>No Accounts Required:</strong> NOMAD operates without user accounts or authentication by default.</li>
+              <li><strong>No Accounts Required:</strong> Vanguard Relay operates without user accounts or authentication by default.</li>
               <li><strong>Network Optional:</strong> An internet connection is only required to download content or updates. All installed features work fully offline.</li>
             </ul>
           </section>
@@ -89,7 +89,7 @@ export default function LegalPage() {
           <section className="mb-10">
             <h2 className="text-2xl font-semibold mb-4">Content Disclaimer</h2>
             <p className="text-text-primary mb-3">
-              Project NOMAD provides tools to download and access content from third-party sources
+              Vanguard Relay provides tools to download and access content from third-party sources
               including Wikipedia, Wikibooks, medical references, educational platforms, and other
               publicly available resources.
             </p>
