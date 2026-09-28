@@ -39,7 +39,7 @@ function buildCoreCapabilities(aiAssistantName: string): Capability[] {
   return [
     {
       id: 'information',
-      name: 'Information Library',
+      name: 'Archives',
       technicalName: 'Kiwix',
       description:
         'Offline access to Wikipedia, medical references, how-to guides, and encyclopedias',
@@ -54,7 +54,7 @@ function buildCoreCapabilities(aiAssistantName: string): Capability[] {
     },
     {
       id: 'education',
-      name: 'Education Platform',
+      name: 'Learning',
       technicalName: 'Kolibri',
       description: 'Interactive learning platform with video courses and exercises',
       features: [
@@ -84,9 +84,9 @@ function buildCoreCapabilities(aiAssistantName: string): Capability[] {
 }
 
 // Additional tools (Notes, Data Tools, and the rest of the catalog) are no
-// longer surfaced in onboarding — they live in Supply Depot, where the full
+// longer surfaced in onboarding — they live in Field Depot, where the full
 // app catalog is browsable any time. Step 1 keeps the focus on the three core
-// capabilities and points users to Supply Depot for everything else.
+// capabilities and points users to Field Depot for everything else.
 
 // Stable step IDs. Creator Packs (4) and AI (5) are BOTH optional, so the set of
 // active steps is computed at runtime (see `activeSteps`) and navigation walks
@@ -117,7 +117,7 @@ export default function EasySetupWizard(props: {
   const [selectedMapCollections, setSelectedMapCollections] = useState<string[]>([])
   const [selectedCreatorPacks, setSelectedCreatorPacks] = useState<string[]>([])
   const [selectedAiModels, setSelectedAiModels] = useState<string[]>([])
-  // Auto-index policy for the AI Assistant Knowledge Base. Defaults to
+  // Auto-index policy for the Relay Intelligence Knowledge Base. Defaults to
   // 'Manual' ("Ask me first"): auto-indexing has real cost and resource
   // implications a non-technical user won't anticipate from the toggle alone,
   // so we default to the safe choice and let them opt in. Persisted to
@@ -747,7 +747,7 @@ export default function EasySetupWizard(props: {
     return (
       <div className="space-y-8">
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-text-primary mb-2">What do you want NOMAD to do?</h2>
+          <h2 className="text-3xl font-bold text-text-primary mb-2">What do you want Vanguard to do?</h2>
           <p className="text-text-secondary">
             Select the capabilities you need. You can always add more later.
           </p>
@@ -824,7 +824,7 @@ export default function EasySetupWizard(props: {
               </div>
             )}
 
-            {/* Everything beyond the core capabilities lives in Supply Depot,
+            {/* Everything beyond the core capabilities lives in Field Depot,
                 the browsable app catalog. Keep onboarding focused and point
                 users there for Notes, Data Tools, and the rest. */}
             <div className="border-t border-desert-stone-light pt-6">
@@ -835,7 +835,7 @@ export default function EasySetupWizard(props: {
                   </h3>
                   <p className="text-sm text-text-secondary">
                     Notes, data tools, and the full catalog of add-on apps are available any time in
-                    Supply Depot.
+                    Field Depot.
                   </p>
                 </div>
                 <StyledButton
@@ -843,7 +843,7 @@ export default function EasySetupWizard(props: {
                   onClick={() => router.visit('/supply-depot')}
                   className="flex-shrink-0"
                 >
-                  Open Supply Depot
+                  Open Field Depot
                 </StyledButton>
               </div>
             </div>
@@ -1076,7 +1076,7 @@ export default function EasySetupWizard(props: {
         {remoteOllamaEnabled && remoteOllamaUrl ? (
           <Alert
             title="Remote Ollama selected"
-            message="Models are managed on the remote machine. You can add models from Settings > AI Assistant after setup, note this is only supported when using Ollama, not LM Studio and other OpenAI API software."
+            message="Models are managed on the remote machine. You can add models from Settings > Relay Intelligence after setup, note this is only supported when using Ollama, not LM Studio and other OpenAI API software."
             type="info"
             variant="bordered"
           />
