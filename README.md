@@ -8,7 +8,7 @@
 
 ---
 
-Vanguard Relay is an independent, offline-first derivative project based on Project NOMAD. It provides a browser-accessible node for offline knowledge, media, archives, local AI, maps, education, notes, data tools, and modular Docker applications.
+Vanguard Relay is an independent, offline-first derivative project based on the original Project NOMAD codebase. It provides a browser-accessible node for offline knowledge, media, archives, local AI, maps, education, notes, data tools, and modular Docker applications.
 
 ## Core Capabilities
 
@@ -31,7 +31,7 @@ For source deployments, use the files in install/. The management interface is a
 
 ## Licensing and Attribution
 
-Vanguard Relay is an independent derivative project based on Project NOMAD. Project NOMAD is licensed under the Apache License 2.0. Required upstream copyright and license notices are retained in this repository, and third-party components remain subject to their respective licenses.
+Vanguard Relay is an independent derivative project based on Project NOMAD. the original Project NOMAD code is licensed under the Apache License 2.0. Required upstream copyright and license notices are retained in this repository, and third-party components remain subject to their respective licenses.
 
 Vanguard Relay is not affiliated with or endorsed by Crosstalk Solutions.
 
