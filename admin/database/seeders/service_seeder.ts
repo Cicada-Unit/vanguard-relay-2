@@ -24,15 +24,15 @@ type ServiceSeedRecord = Omit<
 
 export default class ServiceSeeder extends BaseSeeder {
   // Use environment variable with fallback to production default
-  private static NOMAD_STORAGE_ABS_PATH = env.get(
-    'NOMAD_STORAGE_PATH',
+  private static VANGUARD_RELAY_STORAGE_ABS_PATH = env.get(
+    'VANGUARD_RELAY_STORAGE_PATH',
     '/opt/vanguard-relay/storage'
   )
   private static DEFAULT_SERVICES: ServiceSeedRecord[] = [
     // ── Core / original services ──────────────────────────────────────────────
     {
       service_name: SERVICE_NAMES.KIWIX,
-      friendly_name: 'Information Library',
+      friendly_name: 'Archives',
       powered_by: 'Kiwix',
       display_order: 1,
       description:
@@ -44,7 +44,7 @@ export default class ServiceSeeder extends BaseSeeder {
       container_config: JSON.stringify({
         HostConfig: {
           RestartPolicy: { Name: 'unless-stopped' },
-          Binds: [`${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/zim:/data`],
+          Binds: [`${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/zim:/data`],
           PortBindings: { '8080/tcp': [{ HostPort: '8090' }] },
         },
         ExposedPorts: { '8080/tcp': {} },
@@ -70,11 +70,11 @@ export default class ServiceSeeder extends BaseSeeder {
       container_config: JSON.stringify({
         HostConfig: {
           RestartPolicy: { Name: 'unless-stopped' },
-          Binds: [`${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/qdrant:/qdrant/storage`],
+          Binds: [`${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/qdrant:/qdrant/storage`],
           PortBindings: { '6333/tcp': [{ HostPort: '6333' }], '6334/tcp': [{ HostPort: '6334' }] },
         },
         ExposedPorts: { '6333/tcp': {}, '6334/tcp': {} },
-        // Disable anonymous telemetry — NOMAD is offline-first
+        // Disable anonymous telemetry — Vanguard Relay is offline-first
         Env: ['QDRANT__TELEMETRY_DISABLED=true'],
       }),
       ui_location: '6333',
@@ -98,7 +98,7 @@ export default class ServiceSeeder extends BaseSeeder {
       container_config: JSON.stringify({
         HostConfig: {
           RestartPolicy: { Name: 'unless-stopped' },
-          Binds: [`${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/ollama:/root/.ollama`],
+          Binds: [`${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/ollama:/root/.ollama`],
           PortBindings: { '11434/tcp': [{ HostPort: '11434' }] },
         },
         ExposedPorts: { '11434/tcp': {} },
@@ -113,7 +113,7 @@ export default class ServiceSeeder extends BaseSeeder {
     },
     {
       service_name: SERVICE_NAMES.CYBERCHEF,
-      friendly_name: 'Data Tools',
+      friendly_name: 'Field Tools',
       powered_by: 'CyberChef',
       display_order: 11,
       description: 'Swiss Army knife for data encoding, encryption, and analysis',
@@ -150,7 +150,7 @@ export default class ServiceSeeder extends BaseSeeder {
         HostConfig: {
           RestartPolicy: { Name: 'unless-stopped' },
           PortBindings: { '8080/tcp': [{ HostPort: '8200' }] },
-          Binds: [`${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/flatnotes:/data`],
+          Binds: [`${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/flatnotes:/data`],
         },
         ExposedPorts: { '8080/tcp': {} },
         Env: ['FLATNOTES_AUTH_TYPE=none'],
@@ -171,7 +171,7 @@ export default class ServiceSeeder extends BaseSeeder {
       // schema. Existing 0.12.8 installs are sunset via the deprecate-legacy-kolibri migration and
       // keep running on 8300 until uninstalled; content is re-imported into the fresh Gen 2 install.
       service_name: SERVICE_NAMES.KOLIBRI_GEN2,
-      friendly_name: 'Education Platform (Gen 2)',
+      friendly_name: 'Learning (Gen 2)',
       powered_by: 'Kolibri',
       display_order: 2,
       description: 'Interactive learning platform with video courses and exercises',
@@ -190,7 +190,7 @@ export default class ServiceSeeder extends BaseSeeder {
           // and every content page fails with ERR_CONNECTION_REFUSED. The image's default 8081 is
           // unused here. The image refuses to start without /kolibri mounted (KOLIBRI_HOME = /kolibri).
           PortBindings: { '8080/tcp': [{ HostPort: '8310' }], '8311/tcp': [{ HostPort: '8311' }] },
-          Binds: [`${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/kolibri-gen2:/kolibri`],
+          Binds: [`${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/kolibri-gen2:/kolibri`],
         },
         ExposedPorts: { '8080/tcp': {}, '8311/tcp': {} },
         Env: ['KOLIBRI_ZIP_CONTENT_PORT=8311'],
@@ -204,7 +204,7 @@ export default class ServiceSeeder extends BaseSeeder {
       depends_on: null,
     },
 
-    // ── Supply Depot — curated catalog (ports 8400–8499) ─────────────────────
+    // ── Field Depot — curated catalog (ports 8400–8499) ─────────────────────
 
     {
       service_name: SERVICE_NAMES.STIRLING_PDF,
@@ -221,8 +221,8 @@ export default class ServiceSeeder extends BaseSeeder {
           RestartPolicy: { Name: 'unless-stopped' },
           PortBindings: { '8080/tcp': [{ HostPort: '8400' }] },
           Binds: [
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/stirling-pdf/configs:/configs`,
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/stirling-pdf/logs:/logs`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/stirling-pdf/configs:/configs`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/stirling-pdf/logs:/logs`,
           ],
         },
         ExposedPorts: { '8080/tcp': {} },
@@ -266,13 +266,13 @@ export default class ServiceSeeder extends BaseSeeder {
           RestartPolicy: { Name: 'unless-stopped' },
           PortBindings: { '80/tcp': [{ HostPort: '8410' }] },
           Binds: [
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/filebrowser/files:/srv`,
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/filebrowser/db:/db`,
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/books:/srv/books`,
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/maps:/srv/maps`,
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/media:/srv/media`,
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/kb_uploads:/srv/kb_uploads`,
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/zim:/srv/zim`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/filebrowser/files:/srv`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/filebrowser/db:/db`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/books:/srv/books`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/maps:/srv/maps`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/media:/srv/media`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/kb_uploads:/srv/kb_uploads`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/zim:/srv/zim`,
           ],
         },
         ExposedPorts: { '80/tcp': {} },
@@ -312,8 +312,8 @@ export default class ServiceSeeder extends BaseSeeder {
           RestartPolicy: { Name: 'unless-stopped' },
           PortBindings: { '8083/tcp': [{ HostPort: '8420' }] },
           Binds: [
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/calibreweb/config:/config`,
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/books:/books`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/calibreweb/config:/config`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/books:/books`,
           ],
         },
         ExposedPorts: { '8083/tcp': {} },
@@ -427,8 +427,8 @@ export default class ServiceSeeder extends BaseSeeder {
           // ui_location builds an https:// Open link (one-time cert warning, same as Vaultwarden).
           PortBindings: { '443/tcp': [{ HostPort: '8500' }] },
           Binds: [
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/meshcore-web/nginx-ssl.conf:/etc/nginx/conf.d/default.conf:ro`,
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/meshcore-web/certs:/certs:ro`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/meshcore-web/nginx-ssl.conf:/etc/nginx/conf.d/default.conf:ro`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/meshcore-web/certs:/certs:ro`,
           ],
         },
         ExposedPorts: { '443/tcp': {} },
@@ -458,7 +458,7 @@ export default class ServiceSeeder extends BaseSeeder {
         HostConfig: {
           RestartPolicy: { Name: 'unless-stopped' },
           PortBindings: { '7745/tcp': [{ HostPort: '8470' }] },
-          Binds: [`${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/homebox:/data`],
+          Binds: [`${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/homebox:/data`],
         },
         ExposedPorts: { '7745/tcp': {} },
       }),
@@ -484,7 +484,7 @@ export default class ServiceSeeder extends BaseSeeder {
         HostConfig: {
           RestartPolicy: { Name: 'unless-stopped' },
           PortBindings: { '80/tcp': [{ HostPort: '8480' }] },
-          Binds: [`${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/vaultwarden:/data`],
+          Binds: [`${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/vaultwarden:/data`],
         },
         ExposedPorts: { '80/tcp': {} },
         // ROCKET_TLS points at the self-signed cert generated on install by
@@ -520,9 +520,9 @@ export default class ServiceSeeder extends BaseSeeder {
           RestartPolicy: { Name: 'unless-stopped' },
           PortBindings: { '8096/tcp': [{ HostPort: '8490' }] },
           Binds: [
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/jellyfin/config:/config`,
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/jellyfin/cache:/cache`,
-            `${ServiceSeeder.NOMAD_STORAGE_ABS_PATH}/media:/media`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/jellyfin/config:/config`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/jellyfin/cache:/cache`,
+            `${ServiceSeeder.VANGUARD_RELAY_STORAGE_ABS_PATH}/media:/media`,
           ],
         },
         ExposedPorts: { '8096/tcp': {} },
