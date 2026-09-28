@@ -388,7 +388,7 @@ accept_terms() {
   esac
 }
 
-create_nomad_directory(){
+create_vanguard_relay_directory(){
   # Ensure the main installation directory exists
   if [[ ! -d "$Vanguard_DIR" ]]; then
     echo -e "${YELLOW}#${RESET} Creating directory for Vanguard Relay at $Vanguard_DIR...\\n"
@@ -443,9 +443,9 @@ download_management_compose_file() {
 }
 
 download_helper_scripts() {
-  local start_script_path="${Vanguard_DIR}/start_nomad.sh"
-  local stop_script_path="${Vanguard_DIR}/stop_nomad.sh"
-  local update_script_path="${Vanguard_DIR}/update_nomad.sh"
+  local start_script_path="${Vanguard_DIR}/start_vanguard_relay.sh"
+  local stop_script_path="${Vanguard_DIR}/stop_vanguard_relay.sh"
+  local update_script_path="${Vanguard_DIR}/update_vanguard_relay.sh"
 
   echo -e "${YELLOW}#${RESET} Downloading helper scripts...\\n"
   if ! curl -fsSL --retry 5 --retry-delay 3 "$START_SCRIPT_URL" -o "$start_script_path"; then
@@ -471,7 +471,7 @@ download_helper_scripts() {
 
 start_management_containers() {
   echo -e "${YELLOW}#${RESET} Starting management containers using docker compose...\\n"
-  if ! sudo docker compose -p project-nomad -f "${Vanguard_DIR}/compose.yml" up -d; then
+  if ! sudo docker compose -p vanguard-relay -f "${Vanguard_DIR}/compose.yml" up -d; then
     echo -e "${RED}#${RESET} Failed to start management containers. Please check the logs and try again."
     exit 1
   fi
@@ -565,7 +565,7 @@ verify_gpu_setup() {
   # Write detected GPU type to a marker file the admin container can read. The admin
   # container lacks lspci and AMD GPUs don't register a Docker runtime, so this is the
   # only reliable way for the admin to know an AMD GPU is present at install time.
-  local gpu_marker_path="${Vanguard_DIR}/storage/.nomad-gpu-type"
+  local gpu_marker_path="${Vanguard_DIR}/storage/.vanguard-gpu-type"
   if command -v nvidia-smi &> /dev/null; then
     echo 'nvidia' | sudo tee "${gpu_marker_path}" > /dev/null 2>&1 || true
   elif [[ "${has_amd_gpu}" == 'true' ]]; then
@@ -577,7 +577,7 @@ verify_gpu_setup() {
   # Companion marker used by the admin to pick the right HSA_OVERRIDE_GFX_VERSION for
   # the detected card. Absence of this file means "unknown gfx" — the admin falls back
   # to its built-in default. Always rewrite (or remove) on install to keep state fresh.
-  local amd_gfx_marker_path="${Vanguard_DIR}/storage/.nomad-amd-gfx"
+  local amd_gfx_marker_path="${Vanguard_DIR}/storage/.vanguard-amd-gfx"
   if [[ -n "${amd_gfx_version}" ]]; then
     echo "${amd_gfx_version}" | sudo tee "${amd_gfx_marker_path}" > /dev/null 2>&1 || true
   else
@@ -603,7 +603,7 @@ verify_gpu_setup() {
 success_message() {
   echo -e "${GREEN}#${RESET} Vanguard Relay installation completed successfully!\\n"
   echo -e "${GREEN}#${RESET} Installation files are located at /opt/vanguard-relay\\n\n"
-  echo -e "${GREEN}#${RESET} Vanguard Relay's Command Center should automatically start whenever your device reboots. However, if you need to start it manually, you can always do so by running: ${WHITE_R}${Vanguard_DIR}/start_nomad.sh${RESET}\\n"
+  echo -e "${GREEN}#${RESET} Vanguard Relay's Relay Control should automatically start whenever your device reboots. However, if you need to start it manually, you can always do so by running: ${WHITE_R}${Vanguard_DIR}/start_vanguard_relay.sh${RESET}\\n"
   echo -e "${GREEN}#${RESET} You can now access the management interface at http://localhost:8080 or http://${local_ip_address}:8080\\n"
   echo -e "${GREEN}#${RESET} Thank you for supporting Vanguard Relay!\\n"
 }
@@ -629,7 +629,7 @@ ensure_docker_installed
 check_docker_compose
 setup_nvidia_container_toolkit
 get_local_ip
-create_nomad_directory
+create_vanguard_relay_directory
 download_helper_scripts
 download_management_compose_file
 start_management_containers
