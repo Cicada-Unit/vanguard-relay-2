@@ -893,7 +893,7 @@ export class DockerService {
         const ollamaService = new (await import('./ollama_service.js')).OllamaService()
         const ragService = new (await import('./rag_service.js')).RagService(this, ollamaService)
 
-        ragService.discoverVanguardRelayDocs().catch((error) => {
+        ragService.discoverNomadDocs().catch((error) => {
           logger.error('[DockerService] Failed to discover Vanguard Relay docs:', error)
         })
       }
